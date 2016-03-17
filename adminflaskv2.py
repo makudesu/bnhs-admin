@@ -1,28 +1,22 @@
 from flask import Flask
 from flask.ext.superadmin import Admin
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+import sqlsoup
+from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-
-app = Flask(__name__)
+from sqlalchemy.orm import sessionmaker
 
 engine = create_engine("mysql://root:@localhost/codecalltut", echo=True)
 Base = declarative_base(engine)
+db = sqlsoup.SQLSoup("mysql://root:@localhost/codecalltut")
 
-class Students(Base):
+app = Flask(__name__)
+
+class Prereg(Base):
     __tablename__ = 'tblprereg'
     __table_args__ = {'autoload':True}
 
     def __repr__(self):
         return self.username
-
-class Subjects(Base):
-    __tablename__ = 'tblsubjects'
-    __table_args__ = {'autoload':True}
-
-    def __repr__(self):
-        return '%r' % self.RecNo
 
 def loadSession():
     metadata = Base.metadata
@@ -31,8 +25,7 @@ def loadSession():
     return session
 
 admin = Admin(app)
-admin.register(Students, session=loadSession())
-admin.register(Subjects, session=loadSession())
+admin.register(Prereg, session=loadSession())
 
 if __name__ == "__main__":
     session = loadSession()
