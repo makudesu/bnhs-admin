@@ -1,0 +1,6 @@
+* delete unecessary fields in tblpreregs if not then use column_details_exclude list or refer to line 6
+* add dummy student records
+* add authentication
+* add search, filter and details page on subjects
+* concat lastname *** into 1 name only ** see form_rules
+* remove password in can_export ***this is a bussiness logic filter/remove password in model ** fixed using column_export_exclude_list

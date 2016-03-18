@@ -38,6 +38,8 @@ class StudentsView(ModelView):
 #    create_modal = True
 #    edit_modal = True
     can_export = True
+    export_types = ['html']
+    column_export_exclude_list = ['password']
 
     column_filters =['username','YearLevel','Status','SchoolYear','Student_ID','Lastname','Middlename','Gender','BirthDate','Age','BirthPlace','Religion','Email','Address','CPnumber',]
     column_exclude_list = ['password','CPnumber','Religion','BirthPlace','BirthDate','Guardian','Relationship','Emergency','ERelationship','Address  EAddress','username','SchoolYear','Email']
