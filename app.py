@@ -46,7 +46,7 @@ class StudentsView(ModelView):
 class SubjectsView(ModelView):
     page_size = 10
 
-admin = Admin(app, name='Bnhs', template_mode='bootstrap3')
+admin = Admin(app, name='Bnhs', template_mode='bootstrap3', url='/', index_view=None)
 admin.add_view(StudentsView(Students, loadSession()))
 admin.add_view(SubjectsView(Subjects, loadSession()))
 
