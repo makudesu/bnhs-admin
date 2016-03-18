@@ -43,8 +43,12 @@ class StudentsView(ModelView):
     column_exclude_list = ['password','CPnumber','Religion','BirthPlace','BirthDate','Guardian','Relationship','Emergency','ERelationship','Address  EAddress','username','SchoolYear','Email']
     column_searchable_list = ['username','YearLevel','Status','SchoolYear','Student_ID','Lastname','Middlename','Gender','BirthDate','Age','BirthPlace','Religion','Email','Address','CPnumber',]
 
+class SubjectsView(ModelView):
+    page_size = 10
+
 admin = Admin(app, name='Bnhs', template_mode='bootstrap3')
 admin.add_view(StudentsView(Students, loadSession()))
+admin.add_view(SubjectsView(Subjects, loadSession()))
 
 if __name__ == "__main__":
     session = loadSession()
