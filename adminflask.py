@@ -1,13 +1,15 @@
 from flask import Flask
-from flask.ext.superadmin import Admin
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 app = Flask(__name__)
+app.secret_key = 'super_secret_key=1a2511228276c7a743216e4543ce4652'
 
-engine = create_engine("mysql://root:@localhost/codecalltut", echo=True)
+engine = create_engine("mysql://bnhs:123456@db4free.net/codecalltut", convert_unicode=True, echo=True)
 Base = declarative_base(engine)
 
 class Students(Base):
@@ -30,9 +32,19 @@ def loadSession():
     session = Session()
     return session
 
-admin = Admin(app)
-admin.register(Students, session=loadSession())
-admin.register(Subjects, session=loadSession())
+class StudentsView(ModelView):
+    page_size = 5
+    can_view_details = True
+#    create_modal = True
+#    edit_modal = True
+    can_export = True
+
+    column_filters =['username','YearLevel','Status','SchoolYear','Student_ID','Lastname','Middlename','Gender','BirthDate','Age','BirthPlace','Religion','Email','Address','CPnumber',]
+    column_exclude_list = ['password','CPnumber','Religion','BirthPlace','BirthDate','Guardian','Relationship','Emergency','ERelationship','Address  EAddress','username','SchoolYear','Email']
+    column_searchable_list = ['username','YearLevel','Status','SchoolYear','Student_ID','Lastname','Middlename','Gender','BirthDate','Age','BirthPlace','Religion','Email','Address','CPnumber',]
+
+admin = Admin(app, name='Bnhs', template_mode='bootstrap3')
+admin.add_view(StudentsView(Students, loadSession()))
 
 if __name__ == "__main__":
     session = loadSession()
