@@ -6,9 +6,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
+from fields import excluded_fields, filtered_fields
+
 app = Flask(__name__)
 app.secret_key = 'super_secret_key=1a2511228276c7a743216e4543ce4652'
-
 engine = create_engine("mysql://bnhs:123456@db4free.net/codecalltut", convert_unicode=True, echo=True)
 Base = declarative_base(engine)
 
@@ -35,15 +36,12 @@ def loadSession():
 class StudentsView(ModelView):
     page_size = 5
     can_view_details = True
-#    create_modal = True
-#    edit_modal = True
     can_export = True
     export_types = ['html']
     column_export_exclude_list = ['password']
-
-    column_filters =['username','YearLevel','Status','SchoolYear','Student_ID','Lastname','Middlename','Gender','BirthDate','Age','BirthPlace','Religion','Email','Address','CPnumber',]
-    column_exclude_list = ['password','CPnumber','Religion','BirthPlace','BirthDate','Guardian','Relationship','Emergency','ERelationship','Address  EAddress','username','SchoolYear','Email']
-    column_searchable_list = ['username','YearLevel','Status','SchoolYear','Student_ID','Lastname','Middlename','Gender','BirthDate','Age','BirthPlace','Religion','Email','Address','CPnumber',]
+    column_filters = filtered_fields
+    column_exclude_list = excluded_fields
+    column_searchable_list = filtered_fields
 
 class SubjectsView(ModelView):
     page_size = 10
