@@ -34,6 +34,8 @@ def loadSession():
     return session
 
 class StudentsView(ModelView):
+    create_modal = True
+    edit_modal = True
     page_size = 6
     can_view_details = True
     can_export = True
