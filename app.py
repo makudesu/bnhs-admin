@@ -34,7 +34,7 @@ def loadSession():
     return session
 
 class StudentsView(ModelView):
-    page_size = 5
+    page_size = 10
     can_view_details = True
     can_export = True
     export_types = ['html']
