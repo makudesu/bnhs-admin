@@ -10,7 +10,7 @@ from fields import excluded_fields, filtered_fields
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key=1a2511228276c7a743216e4543ce4652'
-engine = create_engine("mysql://bnhs:123456@db4free.net/codecalltut", convert_unicode=True, echo=True)
+engine = create_engine("mysql://sql6111644:iGMQd39TBT@sql6.freesqldatabase.com/sql6111644", convert_unicode=True, echo=True)
 Base = declarative_base(engine)
 
 class Students(Base):
