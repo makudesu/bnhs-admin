@@ -27,6 +27,14 @@ class Subjects(Base):
     def __repr__(self):
         return '%r' % self.RecNo
 
+class Admin(Base):
+    __tablename__ = 'users'
+    __table_args__ = {'autoload':True}
+
+    def __repr__(self):
+        return '%r' % self.username
+
+
 def loadSession():
     metadata = Base.metadata
     Session = sessionmaker(bind=engine)
@@ -48,9 +56,13 @@ class StudentsView(ModelView):
 class SubjectsView(ModelView):
     page_size = 10
 
-admin = Admin(app, name='Bnhs', template_mode='bootstrap3', url='/', index_view=None)
+class AdminView(ModelView):
+    page_size = 10
+
+admin = Admin(app, name='Bnhs', template_mode='bootstrap3', url='/')
 admin.add_view(StudentsView(Students, loadSession()))
 admin.add_view(SubjectsView(Subjects, loadSession()))
+admin.add_view(AdminView(Admin, loadSession()))
 
 if __name__ == "__main__":
     session = loadSession()
