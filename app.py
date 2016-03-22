@@ -27,12 +27,12 @@ class Subjects(Base):
     def __repr__(self):
         return '%r' % self.RecNo
 
-class Admin(Base):
+class Dadmin(Base):
     __tablename__ = 'users'
     __table_args__ = {'autoload':True}
 
     def __repr__(self):
-        return '%r' % self.username
+        return self.username
 
 
 def loadSession():
@@ -56,13 +56,12 @@ class StudentsView(ModelView):
 class SubjectsView(ModelView):
     page_size = 10
 
-class AdminView(ModelView):
+class DadminView(ModelView):
     page_size = 10
 
-admin = Admin(app, name='Bnhs', template_mode='bootstrap3', url='/')
+admin = Admin(app, name='Bnhs', template_mode='bootstrap3', url='/', index_view=None)
 admin.add_view(StudentsView(Students, loadSession()))
-admin.add_view(SubjectsView(Subjects, loadSession()))
-admin.add_view(AdminView(Admin, loadSession()))
+admin.add_view(DadminView(Dadmin, loadSession()))
 
 if __name__ == "__main__":
     session = loadSession()
